@@ -1,3 +1,7 @@
+# NAME : VISWAJITH LALITHRAM R.V
+
+# REG.NO : 212224240187
+
 # EX-NO-13-MESSAGE-AUTHENTICATION-CODE-MAC
 
 ## AIM:
@@ -26,9 +30,71 @@ To implement MESSAGE AUTHENTICATION CODE(MAC)
 
 ## Program:
 
+```
+
+
+
+#include <stdio.h>
+#include <string.h>
+
+#define KEY "secretkey"   // Shared secret key
+
+// Simple MAC function using XOR
+unsigned int calculate_mac(const char *msg, const char *key)
+{
+    unsigned int mac = 0;
+
+    // XOR all characters of the message
+    for (int i = 0; msg[i] != '\0'; i++)
+        mac ^= msg[i];
+
+    // XOR all characters of the key
+    for (int i = 0; key[i] != '\0'; i++)
+        mac ^= key[i];
+
+    return mac;
+}
+
+int main()
+{
+    char message[256];
+    unsigned int mac_sent, mac_received;
+
+    // Take input
+    printf("Enter the message: ");
+    fgets(message, sizeof(message), stdin);
+
+    // Remove newline
+    message[strcspn(message, "\n")] = '\0';
+
+    // Sender side
+    mac_sent = calculate_mac(message, KEY);
+    printf("Generated MAC (sent): %u\n", mac_sent);
+
+    // Receiver side
+    mac_received = calculate_mac(message, KEY);
+    printf("Calculated MAC (received): %u\n", mac_received);
+
+    // Compare
+    if (mac_sent == mac_received)
+        printf("Message is authentic.\n");
+    else
+        printf("Message integrity check failed.\n");
+
+    return 0;
+}
+
+
+
+
+```
 
 
 ## Output:
+
+
+<img width="1080" height="682" alt="Screenshot 2025-11-15 082410" src="https://github.com/user-attachments/assets/86884acc-27ae-499d-81db-18b1ead345b7" />
+
 
 
 ## Result:
